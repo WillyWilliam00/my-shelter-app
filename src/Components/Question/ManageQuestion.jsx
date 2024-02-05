@@ -1,0 +1,78 @@
+import { useState } from 'react';
+import { Col, Form } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+
+function ManageQuestion({id, fetchQuestions, singleQuestion}) {
+  const token = localStorage.getItem('token')
+  const [show, setShow] = useState(false);
+  const [text, setText] = useState(singleQuestion ? singleQuestion.question : "");
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+     
+
+    const url = singleQuestion
+        ? `http://localhost:3030/questions/update-question/${singleQuestion._id}` // URL per la modifica
+        : `http://localhost:3030/questions/${id}`; // URL per l'aggiunta
+
+    const method = singleQuestion ? 'PATCH' : 'POST';
+
+    const response = await fetch(url, {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        },
+        method: method,
+        body: JSON.stringify({ question: text }),
+    });
+
+    if (response.ok) {
+        fetchQuestions();
+        alert("Operazione eseguita con successo!");
+        setText("");
+        handleClose();
+    } else {
+        alert("Si è verificato un errore.");
+    }
+};
+
+  return (
+    <Col xs={12}>
+            <Button variant="primary" onClick={handleShow}>
+                {singleQuestion ? "Modifica la domanda ✏️" : "Fai una domanda ✒️"}
+            </Button>
+
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>{singleQuestion ? "Modifica la tua domanda:" : "Pubblica la tua domanda:"}</Modal.Title>
+                </Modal.Header>
+
+                <Form onSubmit={handleSubmit}>
+                    <Modal.Body>
+                        <Form.Group className="mb-3 mt-2" controlId="question">
+                            <Form.Control as="textarea" rows={3} value={text} onChange={(e) => setText(e.target.value)} required name="question" />
+                        </Form.Group>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Annulla
+                        </Button>
+                        <Button variant="primary" type="submit">
+                            {singleQuestion ? "Salva Modifiche" : "Pubblica"}
+                        </Button>
+                    </Modal.Footer>
+                </Form>
+            </Modal>
+        </Col>
+    
+  );
+}
+
+export default ManageQuestion;
+
+ 

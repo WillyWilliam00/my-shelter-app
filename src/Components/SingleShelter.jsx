@@ -125,7 +125,7 @@ function SingleShelter() {
                     </Row>
                     <Row>
                         <Col xs={4}><h5>Recensioni: ({reviews.length}) </h5>
-                            <p>La media è: {averageCalculation(reviews)}/5</p>
+                            {reviews.length !== 0 && <p>La media è: {averageCalculation(reviews)}/5</p>}
                             <ReactStars
                                 count={5}
                                 edit={false}

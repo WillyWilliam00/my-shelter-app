@@ -1,8 +1,8 @@
 import { Col, Container, Row, Tab, Nav } from "react-bootstrap";
 import RegistrationUser from "./RegistrationUser";
 import Signin from "./Signin";
-import { useContext, useState } from "react";
-import AuthContext from "../../context/AuthContext";
+import { useState } from "react";
+ 
 
 
 function InitialTab() {

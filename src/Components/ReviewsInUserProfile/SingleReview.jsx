@@ -31,11 +31,16 @@ function SingleReview({ review, fetchReviews }) {
     }
 
   }
+   //ritorna la data in versione gg/mm/aaaa
+   const formatDate = (dateString) => {
+    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+    return new Date(dateString).toLocaleDateString('it-IT', options);
+};
   return (
     <>
       <Col>
         <p>{review.createdBy.name}</p>
-        <p>{review.date}</p>
+        <p>{formatDate(review.date)}</p>
         <div>
           <ReactStars
             count={5}

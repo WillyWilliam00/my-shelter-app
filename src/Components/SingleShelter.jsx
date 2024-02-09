@@ -1,54 +1,51 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { Col, Container, Image, Row } from "react-bootstrap";
 import { useParams, useLocation } from "react-router-dom";
 import { fromLatLng, setKey } from "react-geocode";
 import Weather from "./Weather";
-import QuestionShelter from "./Question/QuestionShelter";
-import ManageQuestion from "./Question/ManageQuestion";
-import ReviewShelter from "./Reviews/ReviewShelter";
-import ManageReview from "./Reviews/ManageReview";
+import QuestionShelter from "./QuestionInUserProfile/QuestionShelter";
+import ManageQuestion from "./QuestionInUserProfile/ManageQuestion";
+import ReviewShelter from "./ReviewsInUserProfile/ReviewShelter";
+import ManageReview from "./ReviewsInUserProfile/ManageReview";
 import ReactStars from "react-stars";
+import AuthContext from "../context/AuthContext";
+import AvailableServices from "./AvailableServices ";
 
 function SingleShelter() {
-     
+
     const { id } = useParams();
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const distance = queryParams.get("d");
     const [shelter, setShelter] = useState(null);
     const [questions, setQuestions] = useState(null)
-    const [reviews, setReviews] = useState(null); 
+    const [reviews, setReviews] = useState(null);
     const [address, setAddress] = useState("");
-    const token = localStorage.getItem('token');
+    const { tokenByLocalStorage } = useContext(AuthContext)
     // Imposta la chiave API per Google Maps Geocoding API.
     setKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
-   
-     
-
+// Funzioni per caricamento recensioni e domande sui rifugi
     const fetchReviews = useCallback(async () => {
-        
-            const reviewsResponse = await fetch(`http://localhost:3030/reviews/${id}`, {
-                method: "GET",
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            if (reviewsResponse.ok) {
-                const reviewsData = await reviewsResponse.json();
-                setReviews(reviewsData);
-                 
-            } else {
-                console.error("Errore nel fetching delle recensioni:");
+        const reviewsResponse = await fetch(`http://localhost:3030/reviews/${id}`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${tokenByLocalStorage}`
             }
-        
-    }, [id, token]) 
+        });
+        if (reviewsResponse.ok) {
+            const reviewsData = await reviewsResponse.json();
+            setReviews(reviewsData);
+        } else {
+            console.error("Errore nel fetching delle recensioni:");
+        }
+    }, [id, tokenByLocalStorage])
+
 
     const fetchQuestions = useCallback(async () => {
-
         const questionsResponse = await fetch(`http://localhost:3030/questions/${id}`, {
             method: "GET",
             headers: {
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${tokenByLocalStorage}`
             }
         });
         if (questionsResponse.ok) {
@@ -58,42 +55,39 @@ function SingleShelter() {
         } else {
             console.error("Errore nel fetching delle domande:");
         }
-    }, [id, token]);
+    }, [id, tokenByLocalStorage]);
 
-    
-
-    useEffect(() => {
-        // Funzione asincrona per gestire la fetch e la geocodifica
+    useEffect(() => { //recupera un determinato rifugio, setta l'indirizzo in base alle coordinate e recupera le recensioni e le domande
         async function fetchShelterAndGeocode() {
             try {
-                // Fetch delle informazioni del rifugio
                 const response = await fetch(`http://localhost:3030/shelter/${id}`);
                 const shelterData = await response.json();
                 setShelter(shelterData)
-                // Assicurati che le coordinate siano presenti prima di tentare la geocodifica
                 if (shelterData.coordinates && shelterData.coordinates.lat && shelterData.coordinates.lng) {
-                    // Geocodifica per ottenere l'indirizzo
                     const geocodeResponse = await fromLatLng(shelterData.coordinates.lat, shelterData.coordinates.lng);
                     const address = geocodeResponse.results[0].formatted_address;
-                    setAddress(address); // Imposta l'indirizzo nello stato
+                    setAddress(address)
                 }
                 fetchQuestions()
                 fetchReviews()
-
             } catch (error) {
                 console.error("Qualcosa non va", error);
             }
         }
-
         fetchShelterAndGeocode();
-
-
     }, [id, fetchQuestions, fetchReviews]);
 
-
+    const averageCalculation = (reviews) => { //calcolo media recensioni
+        const average = reviews.reduce((acc, review) => acc + review.rating, 0,) / reviews.length
+        if (average % 1 === 0) {
+            return average
+        } else {
+            return average.toFixed(1)
+        }
+    }
 
     return (
-        shelter && questions && reviews &&(
+        shelter && questions && reviews && (
             <>
                 <Container fluid>
                     <Row>
@@ -107,7 +101,7 @@ function SingleShelter() {
                         <Col xs={12} lg={8}>
                             <div className="d-flex justify-content-between">
                                 <h3>{shelter.shelterName}</h3>
-                                 <p>Distanza: {distance}km</p>
+                                <p>Distanza: {distance}km</p>
                                 <p className="me-5">Proprietario: {shelter.owner.firstName}</p>
                             </div>
                             <p>{shelter.altitude}m s.l.m</p>
@@ -119,35 +113,32 @@ function SingleShelter() {
                         </Col>
                     </Row>
                     <Row>
-                        <Col xs={12}>
+                        <Col xs={4}>
                             <h4>Servizi Disponibili:</h4>
+                            <AvailableServices services={shelter.availableServices} />
                         </Col>
                     </Row>
                     <Row>
                         <Col xs={4}><h5>Domande: ({questions.length}): </h5></Col>
-                        <Col xs={4}><ManageQuestion  fetchQuestions={fetchQuestions} id={id} /></Col>
-
-
+                        <Col xs={4}><ManageQuestion fetchQuestions={fetchQuestions} id={id} /></Col>
                         {questions.length === 0 ? <p>Non ci sono ancora domande</p> : <QuestionShelter questions={questions} fetchQuestions={fetchQuestions} />}
-
                     </Row>
                     <Row>
-                        <Col xs={4}><h5>Recensioni: ({reviews.length}) </h5> 
-                        <div>
-                        <ReactStars
-                        count={5}
-                        edit={false}
-                        
-                        size={24}
-                        activeColor="#ffd700"
-                    />
-                            </div> </Col>
-                        <Col xs={4}> <ManageReview fetchReviews={fetchReviews} id={id}/></Col>
-                         {reviews.length === 0 ?  <p>Non ci sono ancora recensioni</p> : <ReviewShelter reviews={reviews} fetchReviews={fetchReviews} /> }  
-                        
+                        <Col xs={4}><h5>Recensioni: ({reviews.length}) </h5>
+                            <p>La media è: {averageCalculation(reviews)}/5</p>
+                            <ReactStars
+                                count={5}
+                                edit={false}
+                                value={averageCalculation(reviews)}
+                                size={24}
+                                activeColor="#ffd700"
+                            />
+                        </Col>
+                        <Col xs={4}>
+                            <ManageReview fetchReviews={fetchReviews} id={id} />
+                        </Col>
+                        {reviews.length === 0 ? <p>Non ci sono ancora recensioni</p> : <ReviewShelter reviews={reviews} fetchReviews={fetchReviews} />}
                     </Row>
-
-
                 </Container>
             </>
         )

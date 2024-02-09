@@ -1,17 +1,21 @@
+import { useContext } from 'react';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+import AuthContext from '../../context/AuthContext';
 
-function MapAutocomplete({ setAddress, setCoordinates, address, setZoom, coordinates, setMarkerPosition, userData, setShelterData }) {
+function MapAutocomplete({ setAddress, setCoordinates, address, setZoom, setMarkerPosition, setShelterData }) {
   
+  const {userData, userType} = useContext(AuthContext)// Accede ai dati dell'utente e al suo tipo dal contesto
+
+  // Gestisce la selezione di un indirizzo dalla lista degli indirizzi 
   const handleSelect = async (value) => {
-    const results = await geocodeByAddress(value);
-    const ll = await getLatLng(results[0]);
-    console.log(ll)
-    setAddress(value);
-    setCoordinates(ll);
-    if(!userData){
-       
+    const results = await geocodeByAddress(value); // Ottiene i dettagli dell'indirizzo selezionato
+    const ll = await getLatLng(results[0]); // Converte l'indirizzo in coordinate lat e long
+    setAddress(value); // Aggiorna l'indirizzo selezionato
+    setCoordinates(ll); // Aggiorna le coordinate
+    
+// Se l'utente non è loggato e il type è un rifugio, aggiorna anche la posizione del marker sulla mappa
+    if(!userData || userType === "shelter"){
       const newMarkerPosition = ll;
-      // Aggiorna la posizione del marker con le nuove coordinate
       setMarkerPosition(newMarkerPosition)
       setShelterData(prevData => ({
         ...prevData,
@@ -19,11 +23,7 @@ function MapAutocomplete({ setAddress, setCoordinates, address, setZoom, coordin
             lat: newMarkerPosition.lat,
             lng: newMarkerPosition.lng
         }
-    }))
-    
-    }
-
-   
+    }))}
     // ... altri controlli per tipi di luogo ...
     
     if (results[0].types.includes("locality")) {
@@ -35,7 +35,7 @@ function MapAutocomplete({ setAddress, setCoordinates, address, setZoom, coordin
     }
   };
 
-  // Il return statement deve essere qui
+  
   return (
     <PlacesAutocomplete
       value={address}

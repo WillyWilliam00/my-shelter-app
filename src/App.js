@@ -20,7 +20,7 @@ function App() {
         <Routes>
           <Route path="/" element={<><MyNav /><Main /></>} />
           <Route path="/landing" />
-          <Route path="/signin-and-registration" element={<><MyNav /><SigninandRegistration /></>} />
+          <Route path="/signin-and-registration" element={<SigninandRegistration />} />
           <Route path='/registration-shelter' element={<RegistrationShelter />} />
           <Route path='/favorite-shelters' element={<><MyNav /><FavoriteShelters /></>} />
           <Route path="/me" element={<><MyNav /><ManageProfile /></>} />

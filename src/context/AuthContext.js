@@ -12,7 +12,6 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const tokenByLocalStorage = localStorage.getItem('token')
 
-
   //restituisce i dati del proprio profilo
   // se la fetch non va a buon fine il localStorage viene ripulito e l'utente riportato al login 
   const fetchData = useCallback(async (token, tokenType) => {
@@ -80,7 +79,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ userData, login, logout, userType, tokenByLocalStorage, fetchData }}>
+    <AuthContext.Provider value={{ userData, login, logout, userType, tokenByLocalStorage, fetchData}}>
       {children}
     </AuthContext.Provider>
   );

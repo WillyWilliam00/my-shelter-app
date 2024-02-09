@@ -9,27 +9,73 @@
     background-position: bottom center;
 }
 
-/* Stile per i suggerimenti di base */
+ 
 .suggestion-item {
      
-    background-color: #ffffff; /* Sfondo bianco per suggerimenti non attivi */
-    color: #000000; /* Testo nero */
+    background-color: #ffffff; 
+    color: #000000;  
      
-    border: 1px solid #dddddd; /* Bordo leggero */
+    border: 1px solid #dddddd; 
     
 }
 
-/* Stile per i suggerimenti attivi/evidenziati */
+ 
 .suggestion-item--active {
-    background-color: #f0f0f0; /* Sfondo grigio chiaro per suggerimenti attivi */
-    color: #000000; /* Testo nero, può essere cambiato se necessario */
-    font-weight: bold; /* Rende il testo in grassetto */
-    border: 1px solid #cccccc; /* Bordo un po' più scuro */
-    cursor: pointer; /* Cambia il cursore in una mano per indicare la possibilità di cliccare */
+    background-color: #f0f0f0;  
+    color: #000000;  
+    font-weight: bold;  
+    border: 1px solid #cccccc;  
+    cursor: pointer;  
 }
 
-/* Puoi anche aggiungere effetti al passaggio del mouse, se lo desideri */
+ 
 .suggestion-item:hover {
-    background-color: #e9e9e9; /* Cambia lo sfondo quando il mouse passa sopra */
+    background-color: #e9e9e9;  
     
 }
+
+.loader {
+    --clr: brown;
+    /* color of spining  */
+    width: 50px;
+    height: 50px;
+    position: relative;
+   }
+   
+   .loader:before, .loader:after {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    border: 10px solid transparent;
+    border-top-color: var(--clr);
+   }
+   
+   .loader:before {
+    z-index: 100;
+    animation: spin 1s infinite;
+   }
+   
+   .loader:after {
+    border: 10px solid #ccc;
+   }
+   
+   @keyframes spin {
+    0% {
+     -webkit-transform: rotate(0deg);
+     -ms-transform: rotate(0deg);
+     -o-transform: rotate(0deg);
+     transform: rotate(0deg);
+    }
+   
+    100% {
+     -webkit-transform: rotate(360deg);
+     -ms-transform: rotate(360deg);
+     -o-transform: rotate(360deg);
+     transform: rotate(360deg);
+    }
+   }
+   

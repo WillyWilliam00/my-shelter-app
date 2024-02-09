@@ -1,38 +1,81 @@
-.App {
-  text-align: center;
+.background-Login {
+    background-image: url("/public/images/loginImg.png");
+    background-size: cover;
+    background-position: center center;
+}
+.background-ShelterRegistration{
+    background-image: url("/public/images/ShelterRigistrationImg.png");
+    background-size: cover;
+    background-position: bottom center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+ 
+.suggestion-item {
+     
+    background-color: #ffffff; 
+    color: #000000;  
+     
+    border: 1px solid #dddddd; 
+    
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+ 
+.suggestion-item--active {
+    background-color: #f0f0f0;  
+    color: #000000;  
+    font-weight: bold;  
+    border: 1px solid #cccccc;  
+    cursor: pointer;  
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+ 
+.suggestion-item:hover {
+    background-color: #e9e9e9;  
+    
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+.loader {
+    --clr: brown;
+    /* color of spining  */
+    width: 50px;
+    height: 50px;
+    position: relative;
+   }
+   
+   .loader:before, .loader:after {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    border: 10px solid transparent;
+    border-top-color: var(--clr);
+   }
+   
+   .loader:before {
+    z-index: 100;
+    animation: spin 1s infinite;
+   }
+   
+   .loader:after {
+    border: 10px solid #ccc;
+   }
+   
+   @keyframes spin {
+    0% {
+     -webkit-transform: rotate(0deg);
+     -ms-transform: rotate(0deg);
+     -o-transform: rotate(0deg);
+     transform: rotate(0deg);
+    }
+   
+    100% {
+     -webkit-transform: rotate(360deg);
+     -ms-transform: rotate(360deg);
+     -o-transform: rotate(360deg);
+     transform: rotate(360deg);
+    }
+   }
+   

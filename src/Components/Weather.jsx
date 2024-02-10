@@ -7,7 +7,7 @@ function Weather({ coordinates }) {
     const apiKey = process.env.REACT_APP_WEATHER_API;
     useEffect(() => {//scarica i dati del meteo in base alle coordinate 
         
-        const url = `http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${coordinates.lat},${coordinates.lng}&days=5&lang=it`;
+        const url = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${coordinates.lat},${coordinates.lng}&days=5&lang=it`;
         fetch(url)
             .then(r => r.json())
             .then(SetWeather)

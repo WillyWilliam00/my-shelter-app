@@ -15,8 +15,8 @@ function ManageQuestion({ id, fetchQuestions, singleQuestion }) {
     const handleSubmit = async (e) => {//aggiunge o modifica la domanda in base a dove è richiamato il componente
         e.preventDefault();
         const url = singleQuestion
-            ? `http://localhost:3030/questions/update-question/${singleQuestion._id}` // URL per la modifica
-            : `http://localhost:3030/questions/${id}`; // URL per l'aggiunta
+            ? `https://my-shelter-app-backend.onrender.com/questions/update-question/${singleQuestion._id}` // URL per la modifica
+            : `https://my-shelter-app-backend.onrender.com/questions/${id}`; // URL per l'aggiunta
         const method = singleQuestion ? 'PATCH' : 'POST';
         const response = await fetch(url, {
             headers: {

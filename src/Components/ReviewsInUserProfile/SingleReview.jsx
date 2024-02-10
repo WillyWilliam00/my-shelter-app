@@ -14,7 +14,7 @@ function SingleReview({ review, fetchReviews }) {
     if (!window.confirm("Sei sicuro di voler eliminare questa domanda?")) {
       return;
     }
-    const response = await fetch(`http://localhost:3030/reviews/${review._id}`, {
+    const response = await fetch(`https://my-shelter-app-backend.onrender.com/reviews/${review._id}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${tokenByLocalStorage}`,  

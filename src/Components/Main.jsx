@@ -28,7 +28,7 @@ function Main() {
             alert("La risposta non può essere vuota o composta solo da spazi.");
             return; // Impedisce l'invio se la condizione è verificata
         }
-        const response = await fetch(`http://localhost:3030/questions/update-answer/${questionId}`, {
+        const response = await fetch(`https://my-shelter-app-backend.onrender.com/questions/update-answer/${questionId}`, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${tokenByLocalStorage}`
@@ -47,7 +47,7 @@ function Main() {
     }
 
     const fetchReviews = useCallback(async () => {
-        const reviewsResponse = await fetch(`http://localhost:3030/reviews/${userData?._id}`, {
+        const reviewsResponse = await fetch(`https://my-shelter-app-backend.onrender.com/reviews/${userData?._id}`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${tokenByLocalStorage}`
@@ -64,7 +64,7 @@ function Main() {
 
 
     const fetchQuestions = useCallback(async () => {
-        const questionsResponse = await fetch(`http://localhost:3030/questions/${userData?._id}`, {
+        const questionsResponse = await fetch(`https://my-shelter-app-backend.onrender.com/questions/${userData?._id}`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${tokenByLocalStorage}`
@@ -83,7 +83,7 @@ function Main() {
     // type === shelter -> restituisco la lista delle recensioni e delle domande del proprio rifugio
     useEffect(() => {
         if (userData && userType === "user") {
-            fetch("http://localhost:3030/shelter")
+            fetch("https://my-shelter-app-backend.onrender.com/shelter")
                 .then(response => response.json())
                 .then(data => setShelters(data))
                 .catch(error => console.error("Error fetching shelter data:", error));

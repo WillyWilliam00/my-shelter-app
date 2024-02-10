@@ -26,7 +26,7 @@ function SingleShelter() {
     setKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
 // Funzioni per caricamento recensioni e domande sui rifugi
     const fetchReviews = useCallback(async () => {
-        const reviewsResponse = await fetch(`http://localhost:3030/reviews/${id}`, {
+        const reviewsResponse = await fetch(`https://my-shelter-app-backend.onrender.com/reviews/${id}`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${tokenByLocalStorage}`
@@ -42,7 +42,7 @@ function SingleShelter() {
 
 
     const fetchQuestions = useCallback(async () => {
-        const questionsResponse = await fetch(`http://localhost:3030/questions/${id}`, {
+        const questionsResponse = await fetch(`https://my-shelter-app-backend.onrender.com/questions/${id}`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${tokenByLocalStorage}`
@@ -60,7 +60,7 @@ function SingleShelter() {
     useEffect(() => { //recupera un determinato rifugio, setta l'indirizzo in base alle coordinate e recupera le recensioni e le domande
         async function fetchShelterAndGeocode() {
             try {
-                const response = await fetch(`http://localhost:3030/shelter/${id}`);
+                const response = await fetch(`https://my-shelter-app-backend.onrender.com/shelter/${id}`);
                 const shelterData = await response.json();
                 setShelter(shelterData)
                 if (shelterData.coordinates && shelterData.coordinates.lat && shelterData.coordinates.lng) {

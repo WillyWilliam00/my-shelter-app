@@ -18,8 +18,8 @@ function ManageReview({ id, fetchReviews, singleReview }) {
     const handleSubmit = async (e) => { //modifica o aggiunge la recensione in base a dove è localizzato il componente
         e.preventDefault();
         const url = singleReview
-            ? `http://localhost:3030/reviews/${singleReview._id}` // URL per la modifica
-            : `http://localhost:3030/reviews/${id}`; // URL per l'aggiunta
+            ? `https://my-shelter-app-backend.onrender.com/reviews/${singleReview._id}` // URL per la modifica
+            : `https://my-shelter-app-backend.onrender.com/reviews/${id}`; // URL per l'aggiunta
         const method = singleReview ? "PUT" : 'POST';
         const response = await fetch(url, {
             headers: {

@@ -14,7 +14,7 @@ function SingleQuestion({ question, fetchQuestions }) {
     if (!window.confirm("Sei sicuro di voler eliminare questa domanda?")) {
       return;
     }
-    const response = await fetch(`http://localhost:3030/questions/${question._id}`, {
+    const response = await fetch(`https://my-shelter-app-backend.onrender.com/questions/${question._id}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${tokenByLocalStorage}`, 

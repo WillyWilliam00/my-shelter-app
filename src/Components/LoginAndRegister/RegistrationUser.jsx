@@ -25,7 +25,7 @@ function Register() {
 
     const handleSubmit = async (e) => { //iscrizione  nuovo utente type user
         e.preventDefault();
-        const response = await fetch('http://localhost:3030/user', {
+        const response = await fetch('https://my-shelter-app-backend.onrender.com/user', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

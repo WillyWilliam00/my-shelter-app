@@ -61,7 +61,7 @@ function ShelterRegistration() {
     //crea un nuovo utente rifugio
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const response = await fetch('http://localhost:3030/shelter', {
+        const response = await fetch('https://my-shelter-app-backend.onrender.com/shelter', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -79,7 +79,7 @@ function ShelterRegistration() {
         } else {
             localStorage.setItem("token", data.token)
             //upload dell'immagine del rifugio
-            const uploadImage = await fetch('http://localhost:3030/shelter/me/image',
+            const uploadImage = await fetch('https://my-shelter-app-backend.onrender.com/shelter/me/image',
                 {
                     method: "PATCH",
                     body: imageFile,

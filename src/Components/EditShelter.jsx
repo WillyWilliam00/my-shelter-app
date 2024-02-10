@@ -94,7 +94,7 @@ function EditShelter() {
 
     const handleSubmit = async (e) => {//modifica il rifugio
         e.preventDefault()
-        const response = await fetch('http://localhost:3030/shelter/me', {
+        const response = await fetch('https://my-shelter-app-backend.onrender.com/shelter/me', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -106,7 +106,7 @@ function EditShelter() {
         if (response.ok) {
             if (isFileSelected) {
                 // Se l'immagine è stata modificata, procedi con l'upload
-                const uploadImage = await fetch('http://localhost:3030/shelter/me/image', {
+                const uploadImage = await fetch('https://my-shelter-app-backend.onrender.com/shelter/me/image', {
                     method: "PATCH",
                     body: imageFile,
                     headers: {

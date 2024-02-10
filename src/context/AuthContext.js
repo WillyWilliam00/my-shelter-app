@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
   //restituisce i dati del proprio profilo
   // se la fetch non va a buon fine il localStorage viene ripulito e l'utente riportato al login 
   const fetchData = useCallback(async (token, tokenType) => {
-    const response = await fetch(`http://localhost:3030/${tokenType}/me`, {
+    const response = await fetch(`https://my-shelter-app-backend.onrender.com/${tokenType}/me`, {
       headers: {
         Authorization: `Bearer ${token}`,
       }
@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }) => {
   }, [navigate, fetchData, location.pathname, tokenByLocalStorage]);
 
   const login = async (mail, password) => {// recupera i dati in e fai loggare l'utente
-    const response = await fetch("http://localhost:3030/session", {
+    const response = await fetch("https://my-shelter-app-backend.onrender.com/session", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

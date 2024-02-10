@@ -13,7 +13,7 @@ export const FavoritesProvider = ({ children }) => {
   const location = useLocation();
   
   const allFavorite = useCallback(async () => {//ricevi tutti i rifugi preferiti del proprio utente
-    const response = await fetch("http://localhost:3030/user/me/favorites", {
+    const response = await fetch("https://my-shelter-app-backend.onrender.com/user/me/favorites", {
       method: "GET",
       headers: {
         Authorization: `Bearer ${tokenByLocalStorage}`
@@ -36,7 +36,7 @@ export const FavoritesProvider = ({ children }) => {
   }, [allFavorite, location.pathname, userType])
 
   const addFavorite = async (shelterId) => {//aggiungi un rifugio ai preferiti
-    const response = await fetch("http://localhost:3030/user/me/favorites/add", {
+    const response = await fetch("https://my-shelter-app-backend.onrender.com/user/me/favorites/add", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -53,7 +53,7 @@ export const FavoritesProvider = ({ children }) => {
   };
 
   const removeFavorite = async (shelterId) => {//rimuovi un rifugio dai preferiti
-    const response = await fetch("http://localhost:3030/user/me/favorites/remove", {
+    const response = await fetch("https://my-shelter-app-backend.onrender.com/user/me/favorites/remove", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -70,7 +70,7 @@ export const FavoritesProvider = ({ children }) => {
   };
 
   const clearFavourite = async () => {//elimina tutti i preferiti
-    const response = await fetch("http://localhost:3030/user/me/favorites/clear", {
+    const response = await fetch("https://my-shelter-app-backend.onrender.com/user/me/favorites/clear", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

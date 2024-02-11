@@ -1,0 +1,395 @@
+$base-color: darkgreen;
+
+.baseColor {
+    color: $base-color;
+}
+
+.fitContent {
+    width: fit-content;
+}
+
+.Loginh2 {
+    width: fit-content;
+    margin-top: 1rem;
+    color: green;
+}
+
+.loginBox {
+    border: 4px solid lightgreen;
+    padding: 12px;
+    margin-inline: auto;
+    margin-top: 3rem;
+
+    .Form {
+        .form-check-label {
+            font-size: 1rem;
+            margin-left: 10px;
+        }
+
+        label {
+            margin: 0;
+            font-size: .9rem;
+        }
+
+        button {
+            background-color: green;
+            border: 0;
+            font-weight: bold;
+
+            &:active {
+                background-color: $base-color;
+            }
+        }
+
+        a {
+            position: relative;
+            line-height: 1;
+            width: fit-content;
+            color: green;
+            text-decoration: none;
+        }
+
+        a::before {
+            content: '';
+            width: 0;
+            height: 3px;
+            border-radius: 2px;
+            background-color: green;
+            position: absolute;
+            bottom: -.25rem;
+            left: 50%;
+            transition: width .4s, left .4s;
+        }
+
+        a:hover::before {
+            width: 100%;
+            left: 0;
+        }
+
+        .form-check-input {
+            border: 2px solid green;
+        }
+
+        .form-check-input:checked {
+            border: 2px solid green;
+            background-color: green;
+        }
+    }
+}
+
+.nav-pills .nav-link,
+.nav-pills .show>.nav-link {
+    background-color: lightgray;
+    color: black;
+    margin: 10px;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+    background-color: green;
+    color: white;
+}
+
+.background-Login {
+    background-image: url("../public/images/loginImg.png");
+    background-size: cover;
+    background-position: center center;
+}
+.imgLogoNav {
+    width: 70px;
+    height: 70px;
+}
+
+@media (max-width: 767.98px) {
+    .phoneBackGround {
+        margin-top: 20px;
+        height: 60%;
+    }
+    
+
+    textarea.form-control {
+        height: 5rem;
+    }
+      
+    .navLinkLogOut{
+    
+        a{
+            background-color: darkgreen;
+        }
+    }
+    .navLinkMobile {
+        background-color: darkgreen;
+    }
+        .imgLogoNav {
+            width: 40px;
+            height: 40px;
+        }
+   
+}
+
+@media (min-width: 767.98px) {
+    .background-ShelterRegistration {
+        background-image: url("../public/images/ShelterRigistrationImg.png");
+        background-size: cover;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+        background-position: center;
+    }
+}
+
+@media (max-width: 1200px) {
+
+    textarea.form-control {
+        height: 5rem;
+    }
+}
+
+.navbar {
+    background-color: $base-color;
+    height: 4rem;
+   
+
+    .nav-link {
+
+        color: whitesmoke;
+        font-weight: 500;
+        font-size: 1.1rem;
+        border: 2px solid white;
+        border-radius: 1rem;
+        padding: 4px;
+
+        &:hover {
+            background-color: white;
+            color: $base-color;
+        }
+
+    }
+
+    .navbar-nav .nav-link.active,
+    .navbar-nav .nav-link.show {
+        color: white;
+
+        &:hover {
+            color: $base-color;
+        }
+    }
+
+    .dropdown-item.active,
+    .dropdown-item:active {
+        background-color: $base-color;
+        border: 0;
+    }
+
+}
+
+.mainUser {
+    .welcomBack {
+
+        margin-inline: auto;
+        width: fit-content;
+        font-size: 1.2rem;
+        margin-block: 10px;
+
+
+        span {
+            color: $base-color;
+        }
+    }
+
+    h3 {
+        font-weight: bold;
+        color: $base-color;
+    }
+
+    .ListShelter {
+        height: 72vh;
+        overflow: auto;
+        margin-top: 35px;
+    }
+
+    .card {
+        border-radius: 15px;
+        transition: transform 0.3s ease; 
+        .h5,
+        .h6 {
+          color: white;
+          transition: color 0.3s ease;  
+        }
+      
+        button {
+          background-color: darkgreen;
+          color: white;
+          border: 0;
+          font-weight: bold;
+          margin-top: 3px;
+          transition: transform 0.3s ease;  
+      
+          &:hover {
+            transform: scale(1.1);  
+          }
+          &:active {
+            background-color: $base-color;
+            border: 0;
+        }
+      
+          a {
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            transition: color 0.3s ease; 
+          }
+        }
+      
+        .imgHover {
+          transition: filter 0.3s ease;  
+        }
+        .buttonScopriloOra {
+            transition: opacity, transform,  0.3s ease;
+            opacity: 0;
+            
+        }
+      
+        &:hover {
+            transform: scale(1.03);  
+
+          .imgHover {
+            filter: opacity(0.5);
+          }
+          .buttonScopriloOra {
+            opacity: 1;
+            &:active {
+                scale: 0.95;
+            }
+          }
+          .h5,
+          .h6 {
+            color: darkgreen;
+          }
+        }
+      }
+    }      
+
+    .delete {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: rgb(20, 20, 20);
+        border: none;
+        font-weight: 600;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
+        cursor: pointer;
+        transition-duration: .3s;
+        overflow: hidden;
+        position: relative;
+      }
+      
+      .svgIcon {
+        width: 12px;
+        transition-duration: .3s;
+      }
+      
+      .svgIcon path {
+        fill: white;
+      }
+      
+      .delete:hover {
+        width: 60px;
+        border-radius: 50px;
+        transition-duration: .3s;
+        background-color: rgb(255, 69, 69);
+        align-items: center;
+      }
+      
+      .delete:hover .svgIcon {
+        width: 30px;
+        transition-duration: .3s;
+        transform: translateY(60%);
+      }
+      
+      .delete::before {
+        position: absolute;
+        top: -20px;
+        content: "Delete";
+        color: white;
+        transition-duration: .3s;
+        font-size: 2px;
+      }
+      
+      .delete:hover::before {
+        font-size: 15px;
+        opacity: 1;
+        transform: translateY(30px);
+        transition-duration: .3s;
+      }
+
+      .deleteAll {
+        position: relative;
+        width: 150px;
+        height: 40px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        border: 1px solid #cc0000;
+        background-color: #e50000;
+        overflow: hidden;
+      }
+      
+      .deleteAll, .deleteAll__icon, .deleteAll__text {
+        transition: all 0.3s;
+      }
+      
+      .deleteAll .deleteAll__text {
+        transform: translateX(0px);
+        color: #fff;
+        font-weight: 600;
+      }
+      
+      .deleteAll .deleteAll__icon {
+        position: absolute;
+        transform: translateX(104px);
+        height: 100%;
+        width: 39px;
+        background-color: #cc0000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .deleteAll .svg {
+        width: 20px;
+      }
+      
+      .deleteAll:hover {
+        background: #cc0000;
+      }
+      
+      .deleteAll:hover .deleteAll__text {
+        color: transparent;
+      }
+      
+      .deleteAll:hover .deleteAll__icon {
+        width: 126px;
+        transform: translateX(0);
+      }
+      
+      .deleteAll:active .deleteAll__icon {
+        background-color: #b20000;
+      }
+      
+      .deleteAll:active {
+        border: 1px solid #b20000;
+      }
+.ShelterinfoBox, .wheaterInfoBox, .descriptionInfoBox {
+    border: 3px solid grey;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: lightgray;
+}
+.RowShelter {
+    height: 50vh;
+}

@@ -15,7 +15,7 @@ function GoogleMap({ setShelterData, markerPosition, setMarkerPosition, shelters
     lng: 12
   })
 
-// Gestisce il click sulla mappa aggiungendo un marker nelle coordinate cliccate
+  // Gestisce il click sulla mappa aggiungendo un marker nelle coordinate cliccate
   const handleMapClick = (event) => {
 
     const newMarkerPosition = {
@@ -38,18 +38,19 @@ function GoogleMap({ setShelterData, markerPosition, setMarkerPosition, shelters
   return (
 
     <APIProvider apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
-      <div style={{ height: "80vh", width: "100%" }}>
+      <div style={(!userData || userType === "shelter") ? { height: "50vh" } : { height: "80vh", width: "100%" }}>
         {/* Autocomplete per la ricerca di indirizzi sulla mappa */}
         <MapAutocomplete setShelterData={setShelterData} setAddress={setAddress} setCoordinates={setCoordinates} address={address} setZoom={setZoom} setMarkerPosition={setMarkerPosition} coordinates={coordinates} />
         {/* Componente Map che visualizza la mappa */}
         <Map
           zoom={zoom}
+          style={{ height: "90%" }}
           center={coordinates}
           mapId={process.env.REACT_APP_GOOGLE_MAP_ID}
           onClick={(!userData || userType === "shelter") && handleMapClick}
           mapTypeControl={false}
           streetViewControl={false}>
-            {/*-- se userData non è presente l'utente non è loggato
+          {/*-- se userData non è presente l'utente non è loggato
               -> se l'utente non è loggato e il type è shelter setta la mappa in modo che l'utente possa cambiare la posizione del marker
               -> altrimenti lista tutti i marker dei rifugi sulla mappa per l'utente type user*/}
           {!userData || userType === "shelter" ? (
@@ -63,11 +64,14 @@ function GoogleMap({ setShelterData, markerPosition, setMarkerPosition, shelters
               <AdvancedMarker key={index} position={shelter.coordinates} onClick={() => setOpenInfoWindow(index)}>
                 <Pin background={"green"} borderColor={"brown"} glyphColor={"brown"} />
                 {openInfoWindow === index && <InfoWindow position={shelter.coordinates} onCloseClick={() => setOpenInfoWindow(null)}>
-                  <Link to={`/${shelter._id}`}> <div className='d-flex flex-column'>
-                    <img src={shelter.image} style={{ width: "8rem" }} alt={shelter.shelterName}></img>
-                    <div><FaLocationDot />{shelter.shelterName}</div>
-                    <p>Altitudine: {shelter.altitude}m s.l.m</p>
-                  </div>
+                  <Link to={`/${shelter._id}/?d=${shelter.distance}`} className='text-decoration-none'>
+                    <div className='d-flex flex-column'>
+                      <img src={shelter.image} style={{ width: "10rem" }} alt={shelter.shelterName} className='rounded'></img>
+                      <div>
+                        <p className='my-2 text-dark fs-6'>Nome: <span className='fw-bold'>{shelter.shelterName}</span></p>
+                        <p className='my-1 text-dark fs-6'>Altitudine: <span className='fw-bold'>{shelter.altitude}m s.l.m</span></p>
+                      </div>
+                    </div>
                   </Link>
                 </InfoWindow>}
               </AdvancedMarker>
@@ -76,6 +80,7 @@ function GoogleMap({ setShelterData, markerPosition, setMarkerPosition, shelters
         </Map>
       </div>
     </APIProvider>
-  )}
+  )
+}
 
 export default GoogleMap;

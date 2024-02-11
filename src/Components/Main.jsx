@@ -118,9 +118,9 @@ function Main() {
     const averageCalculation = (reviews) => {
         const average = reviews.reduce((acc, review) => acc + review.rating, 0,) / reviews.length
         if (average % 1 === 0) {
-            return average
+            return +average
         } else {
-            return average.toFixed(1)
+            return +average.toFixed(1)
         }
     }
     //ritorna la data in versione gg/mm/aaaa
@@ -129,8 +129,8 @@ function Main() {
         return new Date(dateString).toLocaleDateString('it-IT', options);
     };
 
-// se il type è user e le seu coordinate sono presenti inserisci nella lista dei rifugi il valore distanza, calcolato tramite haversineDistance
-// ordina i rifugi dal meno distante al piu distante
+    // se il type è user e le seu coordinate sono presenti inserisci nella lista dei rifugi il valore distanza, calcolato tramite haversineDistance
+    // ordina i rifugi dal meno distante al piu distante
     useEffect(() => {
         if (userType === "user" && userCoordinates) {
             const sheltersWithDistance = shelters.map(shelter => ({
@@ -143,17 +143,19 @@ function Main() {
             setSortedShelters(sheltersWithDistance.sort((a, b) => a.distance - b.distance))
         }
     }, [userCoordinates, shelters, userType])
-// in base al type restituisce uno o l'altra interfaccia
-    if (userType === "user") {
+
+    // in base al type restituisce uno o l'altra interfaccia
+    if (userType === "user" && userData) {
         return (
-            <Container>
+            <Container className="mainUser">
                 <Row>
-                    <h3>Trova il rifugio più vicino a te:</h3>
+                    <p className="welcomBack">Ciao <span className="fw-bold">{userData.name}👋</span></p>
+                    <h3 className="fw-bold">Trova il rifugio più vicino a te:</h3>
                     <Col xs={12} lg={8}>
 
-                        {isApiLoaded && <GoogleMap shelters={shelters} />}
+                        {isApiLoaded && <GoogleMap shelters={sortedShelters} />}
                     </Col>
-                    <Col xs={12} lg={4} style={{ height: "80vh", overflow: "auto" }}>{
+                    <Col xs={12} lg={4} className="ListShelter">{
                         sortedShelters.map((shelter, i) => (
                             <ShelterCard shelter={shelter} key={i} />
                         ))
@@ -164,49 +166,60 @@ function Main() {
         );
     } else if (userType === "shelter" && questions && reviews) {
         return (
-            <Container fluid>
-                <Row>
-                    <Col>
-                        <h3>Domande:</h3>
+            <Container >
+                <h4 className="fw-bold my-4">Rispondi alla tua community e guarda cosa ne pensano del tuo rifugio🩷</h4>
+                <Row className="RowShelter" style={{overflow: "auto", borderBottom: "2px solid darkgreen"}}>
+                    <Col className="mt-3">
+                        <h5 className="fw-bold">Domande sul tuo rifugio:</h5>
                         <p>Qui sono racchiuse tutte le domande che gli utenti ti hanno fatto:</p>
                         <Tabs defaultActiveKey="allQuestions" id="uncontrolled-tab-example" className="mb-3">
                             <Tab eventKey="allQuestions" title={`Tutte le domande: (${questions.length})`}>
                                 {questions.map((question, i) => (
                                     <div key={i}>
-                                        <p>Domanda: {question.question}</p>
-                                        <p>Fatta da: {question.createdBy.name}</p>
-                                        {question.answer === "" ? <p>Non hai ancora risposto</p> :
-                                            <><p>{question.answer}</p>
-                                                {visibleTextArea !== question._id ? (
-                                                    <Button onClick={() => { setVisibleTextArea(question._id); setAnswer(question.answer) }} type="button">Modifica Risposta</Button>
-                                                ) : (
-                                                    <Form onSubmit={(e) => handleAnswer(question._id, e)}>
-                                                        <Form.Group className="mb-3" controlId="answer" required>
-                                                            <Form.Label>Modifica risposta:</Form.Label>
-                                                            <Form.Control as="textarea" rows={3} name="answer" value={answer} onChange={(e) => { setAnswer(e.target.value) }} required />
-                                                        </Form.Group>
-                                                        <Button variant="primary" type="submit">Invia Risposta</Button>
-                                                    </Form>
-                                                )}</>}
-                                        <p>Data: {formatDate(question.date)}</p>
+                                        <p><span className="fw-medium">Domanda fatta da:</span> {question.createdBy.name} <span className="fw-medium">in data:</span> {formatDate(question.date)}</p>
+                                        <p>{question.question}</p>
+                                        {question.answer === "" ? <p className="fst-italic">Non hai ancora risposto</p> :
+                                            <>
+                                                <div className={visibleTextArea !== question._id && "d-flex align-items-center" }>
+                                                    
+                                                    {visibleTextArea !== question._id ? (
+                                                        <>
+                                                        <h6 className="m-0">La tua risposta:</h6>
+                                                        <Button style={{fontSize: 12, background: "darkgreen", border: "none"}} className="ms-3" onClick={() => { setVisibleTextArea(question._id); setAnswer(question.answer) }} type="button">Modifica Risposta</Button>
+                                                        </>
+                                                    ) : (
+                                                        <Form onSubmit={(e) => handleAnswer(question._id, e)}>
+                                                            <Form.Group className="mb-3" controlId="answer" required>
+                                                                <Form.Label className="fw-medium">Modifica risposta:</Form.Label>
+                                                                <Form.Control as="textarea" rows={3} name="answer" value={answer} onChange={(e) => { setAnswer(e.target.value) }} required />
+                                                            </Form.Group>
+                                                            <Button style={{fontSize: 12, background: "darkgreen", border: "none"}} type="submit">Invia Risposta</Button>
+                                                        </Form>
+                                                    )}
+                                                </div>
+                                                {visibleTextArea !== question._id && <p>{question.answer}</p>}
+                                                
+                                            </>}
+
                                     </div>
                                 ))}
                             </Tab>
                             <Tab eventKey="unansweredQuestions" title={`Domande senza risposta: (${questions.filter(question => question.answer === "").length})`}>
                                 {questions.filter(question => question.answer === "").map((question, i) => (
                                     <div key={i}>
-                                        <p>Domanda: {question.question}</p>
-                                        <p>Fatta da: {question.createdBy.name}</p>
-                                        <p>Data: {formatDate(question.date)}</p>
+                                        <p className="m-0 fw-bold">Domanda:</p>
+                                        <p className="m-0">{question.question}</p>
+                                        <p className="m-0 "><span className="fw-bold">Fatta da:</span> {question.createdBy.name}</p>
+                                        <p className="m-0 "><span className="fw-bold">Data:</span> {formatDate(question.date)}</p>
                                         {visibleTextArea !== question._id ? (
-                                            <Button onClick={() => { setVisibleTextArea(question._id) }} type="button">Rispondi</Button>
+                                            <Button style={{fontSize: 12, background: "darkgreen", border: "none"}} onClick={() => { setVisibleTextArea(question._id) }} type="button">Rispondi</Button>
                                         ) : (
                                             <Form onSubmit={(e) => handleAnswer(question._id, e)}>
                                                 <Form.Group className="mb-3" controlId="answer">
                                                     <Form.Label>Rispondi:</Form.Label>
                                                     <Form.Control as="textarea" rows={3} name="answer" value={answer} onChange={(e) => setAnswer(e.target.value)} required />
                                                 </Form.Group>
-                                                <Button variant="primary" type="submit">Invia Risposta</Button>
+                                                <Button style={{fontSize: 12, background: "darkgreen", border: "none"}} type="submit">Invia Risposta</Button>
                                             </Form>
                                         )}
                                     </div>
@@ -216,32 +229,43 @@ function Main() {
                         </Tabs>
                     </Col>
                 </Row>
-                <Row>
+                <Row className="mt-2 RowShelter" style={{overflow: "auto", borderBottom: "2px solid darkgreen"}}>
                     <Col>
-                        <h3>Recensioni:</h3>
+                    <div className="d-flex align-items-center justify-content-between">
+                    <h5 className="fw-bold">Recensioni sul tuo rifugio:</h5>
+                        <p className="fw-medium">In questo momento hai {reviews.length} recensioni</p>
+                    </div>
+                        
                         <p>Qui sono racchiuse tutte le recensioni sul tuo rifugio:</p>
-                        <p>In questo momento hai {reviews.length} recensioni</p>
-                        {reviews.length !== 0 && <p>La tua media è: {averageCalculation(reviews)}/5</p>}
+                        
+                        {reviews.length !== 0 &&
+                        <div className="d-flex align-items-center">
+                            <p className="m-0 fw-medium">La tua media è: {averageCalculation(reviews)}/5</p>
                         <ReactStars
+                        className="ms-3"
                             count={5}
                             edit={false}
                             value={averageCalculation(reviews)}
                             size={24}
                             activeColor="#ffd700"
                         />
+                        </div>}
                         {reviews.length === 0 ? <p>Non ci sono ancora recensioni 🙁</p> :
                             reviews.map((review, i) => (
-                                <div key={i}>
-                                    <p>{review.createdBy.name}</p>
+                                <div key={i} className="mt-3" style={{background: "lightgray", borderRadius: 5, padding: 10}}>
+                                    <div className="d-flex align-items-center">
+                                    <p className="m-0">Da: {review.createdBy.name}</p>
                                     <ReactStars
+                                    className="ms-3"
                                         count={5}
                                         edit={false}
                                         value={review.rating}
                                         size={24}
                                         activeColor="#ffd700"
                                     />
+                                    <p className="m-0 ms-auto">Recensito il {formatDate(review.date)}</p>
+                                    </div>
                                     <p>{review.comment}</p>
-                                    <p>Recensito il {formatDate(review.date)}</p>
                                 </div>
                             ))}
                     </Col>

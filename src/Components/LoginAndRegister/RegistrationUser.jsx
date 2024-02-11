@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, Button, Alert } from "react-bootstrap";
+import { Form, Button, Alert, Row, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 
 function Register() {
@@ -53,107 +53,120 @@ function Register() {
     }
 
     return (
-        <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="nameInput">
-                <Form.Label>Nome</Form.Label>
-                <Form.Control
-                    type="name"
-                    placeholder="Inserisci il tuo nome"
-                    name="name"
-                    required
-                    value={formData.name}
-                    onChange={handleChange}
-                />
-            </Form.Group>
-            <Form.Group controlId="surnameInput">
-                <Form.Label>Cognome</Form.Label>
-                <Form.Control
-                    type="surname"
-                    placeholder="Inserisci il tuo cognome"
-                    name="surname"
-                    required
-                    value={formData.surname}
-                    onChange={handleChange}
-                />
-            </Form.Group>
-            <Form.Group controlId="mailInput">
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                    type="email"
-                    placeholder="Inserisci la tua email"
-                    name="mail"
-                    value={formData.mail}
-                    required
-                    onChange={handleChange}
-                />
-            </Form.Group>
-            <Form.Group controlId="addressInput">
-                <Form.Label>Inserisci l'indirizzo</Form.Label>
-                <Form.Control
-                    type="text"
-                    placeholder="Inserisci qui il tuo indirizzo"
-                    name="address"
-                    required
-                    onChange={handleChange} />
-            </Form.Group>
-            <Form.Group controlId="HouseNumberInput">
-                <Form.Label>N° civico</Form.Label>
-                <Form.Control
-                    type="number"
-                    placeholder="10"
-                    name="houseNumber"
-                    required
-                    onChange={handleChange} />
-            </Form.Group>
-            <Form.Group controlId="zipCodeInput">
-                <Form.Label>Inserisci il CAP</Form.Label>
-                <Form.Control
-                    type="number"
-                    placeholder="21010"
-                    name="zipCode"
-                    required
-                    onChange={handleChange} />
-            </Form.Group>
-            <Form.Group controlId="countryInput">
-                <Form.Label>Inserisci località</Form.Label>
-                <Form.Control
-                    type="text"
-                    placeholder="Milano"
-                    name="country"
-                    required
-                    onChange={handleChange} />
-            </Form.Group>
-            <Form.Group controlId="provinceInput">
-                <Form.Label>Inserisci provincia</Form.Label>
-                <Form.Control
-                    maxLength={2}
-                    type="text"
-                    placeholder="MI"
-                    name="province"
-                    required
-                    onChange={handleChange} />
-            </Form.Group>
-            <Form.Group controlId="passwordInput">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                    type="password"
-                    placeholder="Inserisci la tua password"
-                    name="password"
-                    required
-                    value={formData.password}
-                    onChange={handleChange}
-                />
-                {!passwordValid && (
-                    <Alert variant="danger">
-                        La password deve essere lunga almeno 8 caratteri e contenere una lettera maiuscola e un carattere speciale.
-                    </Alert>
-                )}
-            </Form.Group>
-
-            <Button variant="primary" type="submit" className='m-auto' disabled={!passwordValid}>
+        <Form onSubmit={handleSubmit} className="Form">
+            <Row> <Col xs={6}>
+                <Form.Group controlId="nameInput">
+                    <Form.Label><strong>Nome</strong></Form.Label>
+                    <Form.Control
+                        type="name"
+                        placeholder="Inserisci il tuo nome"
+                        name="name"
+                        required
+                        value={formData.name}
+                        onChange={handleChange}
+                    />
+                </Form.Group>
+            </Col>
+                <Col xs={6}><Form.Group controlId="surnameInput">
+                    <Form.Label><strong>Cognome</strong></Form.Label>
+                    <Form.Control
+                        type="surname"
+                        placeholder="Inserisci il tuo cognome"
+                        name="surname"
+                        required
+                        value={formData.surname}
+                        onChange={handleChange}
+                    />
+                </Form.Group>
+                </Col>
+            </Row>
+            <Row>
+                <Col xs={6}><Form.Group controlId="mailInput">
+                    <Form.Label><strong>Email</strong></Form.Label>
+                    <Form.Control
+                        type="email"
+                        placeholder="Inserisci la tua email"
+                        name="mail"
+                        value={formData.mail}
+                        required
+                        onChange={handleChange}
+                    />
+                </Form.Group></Col>
+                <Col xs={6}><Form.Group controlId="passwordInput">
+                    <Form.Label><strong>Password</strong></Form.Label>
+                    <Form.Control
+                        type="password"
+                        placeholder="Inserisci la tua password"
+                        name="password"
+                        required
+                        value={formData.password}
+                        onChange={handleChange}
+                    />
+                    
+                </Form.Group></Col>
+            </Row>
+            <Row>
+                <Col xs={8}><Form.Group controlId="addressInput">
+                    <Form.Label><strong>Indirizzo</strong></Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Inserisci qui il tuo indirizzo"
+                        name="address"
+                        required
+                        onChange={handleChange} />
+                </Form.Group></Col>
+                <Col xs={4}><Form.Group controlId="HouseNumberInput">
+                    <Form.Label><strong>N° civico</strong></Form.Label>
+                    <Form.Control
+                        type="number"
+                        placeholder="10"
+                        name="houseNumber"
+                        required
+                        onChange={handleChange} />
+                </Form.Group></Col>
+            </Row>
+            <Row>
+                <Col xs={8}> <Form.Group controlId="countryInput">
+                    <Form.Label><strong>Località</strong></Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Milano"
+                        name="country"
+                        required
+                        onChange={handleChange} />
+                </Form.Group></Col>
+                <Col xs={2}><Form.Group controlId="zipCodeInput">
+                    <Form.Label><strong>Cap</strong></Form.Label>
+                    <Form.Control
+                        type="number"
+                        placeholder="21010"
+                        name="zipCode"
+                        required
+                        onChange={handleChange} />
+                </Form.Group></Col>
+                <Col xs={2}><Form.Group controlId="provinceInput">
+                    <Form.Label><strong>Provincia</strong></Form.Label>
+                    <Form.Control
+                        maxLength={2}
+                        type="text"
+                        placeholder="MI"
+                        name="province"
+                        required
+                        onChange={handleChange} />
+                </Form.Group></Col>
+            </Row>
+          
+            <Button variant="primary" type="submit" className='m-3 fs-5' disabled={!passwordValid}>
                 Registrati
             </Button>
-            <Link to={"/registration-shelter"}>Hai un rifugio?</Link>
+           
+            
+            {!passwordValid && (
+                        <Alert variant="danger">
+                            La password deve essere lunga almeno 8 caratteri e contenere una lettera maiuscola e un carattere speciale.
+                        </Alert>
+                    )}
+            <Link to={"/registration-shelter"} className=" fs-4"><strong>Hai un rifugio?</strong></Link>
         </Form>
     )
 }

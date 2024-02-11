@@ -4,7 +4,7 @@ import SingleQuestion from "./SingleQuestion.jsx"
 //lista tutte le domande
 function QuestionShelter({ questions, fetchQuestions }) {
     return (
-        <Row>
+        <Row style={{height: "30vh", overflow: "auto"}}>
             {questions.map(((question, i) => (
                 <SingleQuestion key={i} question={question} fetchQuestions={fetchQuestions} />
             )))}

@@ -38,9 +38,9 @@ function ManageQuestion({ id, fetchQuestions, singleQuestion }) {
 
     return (
 
-        <Col xs={12}>
-            <Button variant="primary" onClick={handleShow}>
-                {singleQuestion ? "Modifica la domanda ✏️" : "Fai una domanda ✒️"}
+       <>
+            <Button variant="primary" onClick={handleShow} style={singleQuestion ? {fontSize: 12, marginLeft: 5, background: "darkgreen", border: "none"} :  { background: "darkgreen", border: "none"}}>
+                {singleQuestion ? "Modifica ✏️" : "Fai una domanda ✒️"}
             </Button>
 
             <Modal show={show} onHide={handleClose}>
@@ -64,8 +64,8 @@ function ManageQuestion({ id, fetchQuestions, singleQuestion }) {
                     </Modal.Footer>
                 </Form>
             </Modal>
-        </Col>
-
+        
+            </>
     );
 }
 

@@ -43,15 +43,16 @@ function MapAutocomplete({ setAddress, setCoordinates, address, setZoom, setMark
       onSelect={handleSelect}
     >
       {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-        <div>
-          <input
+        <div >
+          <input style={{width: "50%"}}
             {...getInputProps({
               placeholder: 'Search Places ...',
-              className: 'location-search-input',
+              className: 'location-search-input mb-2',
+              
             })}
           />
-          <div className="autocomplete-dropdown-container" style={{position: "absolute", zIndex: 1}}>
-            {loading && <div>Loading...</div>}
+          <div className="autocomplete-dropdown-container " style={{position: "absolute", zIndex: 1}}>
+            {loading && <div className='bg-white'>Loading...</div>}
             {suggestions.map((suggestion, i) => {
               const className = suggestion.active
                 ? 'suggestion-item--active'

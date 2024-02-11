@@ -30,6 +30,7 @@ function ServiceCheckbox({ service, label, onChange, isChecked }) { //icone spec
           }
           checked={isChecked}
           onChange={() => onChange(service)}
+          
         />
       </Form.Group>
     </Col>

@@ -130,24 +130,25 @@ function EditShelter() {
     }
 
     return (
-        <>
-            <Container fluid>
-                <Form onSubmit={handleSubmit}>
+
+        <Container className="loginBox">
+           
+                <Form onSubmit={handleSubmit} className="Form">
                     <Row>
-                        <Col xs={6}>
-                            <h5>Modifica le informazioni del tuo rifugio:</h5>
+                        <Col xs={12} xl={6} className="mt-2">
+                            <h5 className="fw-bold">Modifica le informazioni del tuo rifugio:</h5>
                             <p>Qui puoi modificare tutto ciò che riguarda il tuo rifugio.</p>
                         </Col>
-                        <Col xs={6}>
-                            <Button variant="primary" type="submit" className='mt-5' disabled={!isModified}>
+                        <Col xs={12} xl={6}>
+                            <Button variant="primary" type="submit" className='mt-5' >
                                 Aggiorna
                             </Button>
                         </Col>
                     </Row>
 
                     <Row>
-                        <h3>Dati del proprietario:</h3>
-                        <Col>
+                        <h5 className="fw-bold">Dati del proprietario:</h5>
+                        <Col xs={6}>
                             <Form.Group controlId="nameInput">
                                 <Form.Label>Nome</Form.Label>
                                 <Form.Control
@@ -162,7 +163,7 @@ function EditShelter() {
                             </Form.Group>
 
                         </Col>
-                        <Col>
+                        <Col xs={6}>
                             <Form.Group controlId="surnameInput">
                                 <Form.Label>Cognome</Form.Label>
                                 <Form.Control
@@ -198,19 +199,25 @@ function EditShelter() {
                             />
                         </Form.Group></Col>
                     </Row>
-                    <Row>
-                        <h3>Dov'è il tuo rifugio?</h3>
-                        <Col xs={5}>
+                    <Row className="mt-3">
+                        <Col xs={12} xl={5}>
+                        <h5 className="fw-bold">Dov'è il tuo rifugio?</h5>
                             {/*Carica il componente Map per la scelta del marker e della posizione in base alla mappa o indirizzo scritto*/}
                             {isApiLoaded && <GoogleMap setShelterData={setShelterData} shelterData={shelterData} markerPosition={markerPosition} setMarkerPosition={setMarkerPosition}></GoogleMap>}
                         </Col>
-                        <Col xs={7}> <h3>Dati del rifugio:</h3>
+                        <Col xs={12} xl={7}> 
+                        <h5 className="fw-bold">Dati del rifugio:</h5>
+                        <Row>
+                            <Col xs={6}>
                             <p>Immagine attuale del rifugio:</p>
                             <img src={userData.image} style={{ width: "10rem" }} alt={userData.name} />
                             <Form.Group controlId="formFile" className="mb-3" onChange={handleFile}>
                                 <Form.Label>Modifica la foto del tuo rifugio:</Form.Label>
                                 <Form.Control type="file" />
                             </Form.Group>
+                            </Col>
+                            <Col xs={6}>
+                            <Form.Group controlId="altitudeInput">
                             <Form.Group controlId="shelterNameInput">
                                 <Form.Label>Nome del tuo rifugio</Form.Label>
                                 <Form.Control
@@ -222,22 +229,6 @@ function EditShelter() {
                                     onChange={handleShelterChange}
                                 />
                             </Form.Group>
-                            <Form.Group className="mb-3" controlId="description">
-                                <Form.Label>Descrivi il tuo rifugio </Form.Label>
-                                <Form.Control as="textarea" rows={3} value={shelterData.description} onChange={handleShelterChange} required name="description" />
-                            </Form.Group>
-                            {Object.keys(availableServicesInfo).map((service) => (
-                                <ServiceCheckbox
-                                    key={service}
-                                    service={service}
-                                    label={availableServicesInfo[service]}
-                                    imgSrc={`images/${service}.jpg`}
-                                    onChange={() => handleServiceChange(service)}
-                                    isChecked={shelterData.availableServices[service]}
-                                    required
-                                />
-                            ))}
-                            <Form.Group controlId="altitudeInput">
                                 <Form.Label>Altitudine del rifugio:</Form.Label>
                                 <Form.Control
                                     type="number"
@@ -248,11 +239,30 @@ function EditShelter() {
                                     onChange={handleShelterChange}
                                 />
                             </Form.Group>
+                            <Form.Group className="mb-3" controlId="description">
+                                <Form.Label>Descrivi il tuo rifugio </Form.Label>
+                                <Form.Control as="textarea" rows={3} value={shelterData.description} onChange={handleShelterChange} required name="description" />
+                            </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                        <h5 className="fw-bold">Servizi del rifugio:</h5>
+                        {Object.keys(availableServicesInfo).map((service) => (
+                                <ServiceCheckbox
+                                    key={service}
+                                    service={service}
+                                    label={availableServicesInfo[service]}
+                                    imgSrc={`images/${service}.jpg`}
+                                    onChange={() => handleServiceChange(service)}
+                                    isChecked={shelterData.availableServices[service]}
+                                    required
+                                />
+                            ))}
+                        </Row>
                         </Col>
                     </Row>
                 </Form>
-            </Container>
-        </>
+        </Container>
     )
 }
 

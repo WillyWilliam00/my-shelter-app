@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
-function Weather({ coordinates }) {
+function Weather({ coordinates, name }) {
 
     const [weather, SetWeather] = useState()
     const apiKey = process.env.REACT_APP_WEATHER_API;
@@ -21,13 +21,12 @@ function Weather({ coordinates }) {
 
     return (
         !weather ? <h4>Loading...</h4> : (
-            <><h3>Meteo</h3>
+            <><h5>Che tempo fa in <span className="baseColor fw-bold">{name}?</span></h5>
                 <Container>
                     {weather.forecast.forecastday.map((day, index) => (
-                        <Row key={day.date} style={{ borderBlockEnd: "1px solid grey" }}>
-
+                        <Row key={day.date} style={{ borderBlockEnd: "1px solid darkgreen" }}>
                             <Col xs={2} className="d-flex align-items-center">
-                                <p style={{ textTransform: "capitalize" }} className="m-0">{index === 0 ? 'Oggi' : getDayName(day.date, "it-IT")}:</p>
+                                <p style={{ textTransform: "capitalize" }} className="m-0 fw-bold">{index === 0 ? 'Oggi' : getDayName(day.date, "it-IT")}:</p>
                             </Col>
                             <Col xs={10} className="d-flex justify-content-evenly align-items-center">
                                 <img src={day.day.condition.icon} alt={day.day.condition.text} />
@@ -35,11 +34,12 @@ function Weather({ coordinates }) {
                                     <p className="m-0">{day.day.avgtemp_c}°C</p>
                                     <p className="m-0">{day.day.mintemp_c}°C</p>
                                 </div>
-                                <p className="m-0">{day.day.avghumidity}%</p>
+                                <p className="m-0">{day.day.avghumidity}% 💧</p>
                             </Col>
                         </Row>
                     ))}
-                    Powered by <a href="https://www.weatherapi.com/" title="Weather API">WeatherAPI.com</a>
+                    <p className="m-0" style={{fontSize: 10}}>Powered by <a href="https://www.weatherapi.com/" title="Weather API">WeatherAPI.com</a></p>
+                    
                 </Container>
             </>
         )

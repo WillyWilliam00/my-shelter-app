@@ -17,7 +17,7 @@ function SingleReview({ review, fetchReviews }) {
     const response = await fetch(`https://my-shelter-app-backend.onrender.com/reviews/${review._id}`, {
       method: 'DELETE',
       headers: {
-        Authorization: `Bearer ${tokenByLocalStorage}`,  
+        Authorization: `Bearer ${tokenByLocalStorage}`,
       },
     });
     setIsLoading(true);
@@ -31,32 +31,39 @@ function SingleReview({ review, fetchReviews }) {
     }
 
   }
-   //ritorna la data in versione gg/mm/aaaa
-   const formatDate = (dateString) => {
+  //ritorna la data in versione gg/mm/aaaa
+  const formatDate = (dateString) => {
     const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
     return new Date(dateString).toLocaleDateString('it-IT', options);
-};
+  };
   return (
-    <>
-      <Col>
-        <p>{review.createdBy.name}</p>
-        <p>{formatDate(review.date)}</p>
-        <div>
-          <ReactStars
+ 
+      <Col xs={8} className="mt-3 ms-2">
+        {review.createdBy._id === userData._id &&
+          <div className="d-flex align-items-center justify-content-between">
+            <p className="fw-medium m-0">Ecco la tua Recensione:</p>
+            <div>
+            <Button variant="danger" type="button" onClick={handleDelete} disabled={isLoading} style={{ fontSize: 12 }}>
+              {isLoading ? 'Eliminazione...' : 'X'}
+            </Button>
+            <ManageReview singleReview={review} fetchReviews={fetchReviews} />
+            </div>
+           
+          </div>}
+        <div className="mt-2" style={{ background: "lightgrey", borderRadius: 10, padding: 5 }}>
+        <ReactStars
             count={5}
             edit={false}
             value={review.rating}
-            size={24}
-            activeColor="#ffd700"
-          />
+            size={20}
+            activeColor="#ffd700"/>
+          <p className="m-0">{review.comment}</p>
+          <p className="fw-medium m-0" style={{ fontSize: 12 }}>By: <span style={{ color: "grey" }}>{review.createdBy.name}</span> {formatDate(review.date)}</p>
         </div>
-        <p>{review.comment}</p></Col>
-      {review.createdBy._id === userData._id && <>
-        <Button variant="danger" type="button" onClick={handleDelete} disabled={isLoading}>
-          {isLoading ? 'Eliminazione...' : 'X'}
-        </Button>
-        <ManageReview singleReview={review} fetchReviews={fetchReviews} /></>}
-    </>
+
+      </Col>
+
+  
   )
 }
 

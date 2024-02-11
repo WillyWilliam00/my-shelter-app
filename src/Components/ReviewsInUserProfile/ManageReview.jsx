@@ -41,9 +41,9 @@ function ManageReview({ id, fetchReviews, singleReview }) {
     };
 
     return (
-        <Col xs={12}>
-            <Button variant="primary" onClick={handleShow}>
-                {singleReview ? "Modifica la tua recensione ✏️" : "Fai una recensione ✒️"}
+        <>
+            <Button variant="primary" onClick={handleShow} style={singleReview ? {fontSize: 12, marginLeft: 5, background: "darkgreen", border: "none"} :  { background: "darkgreen", border: "none"}}>
+                {singleReview ? "Modifica✏️" : "Fai una recensione ✒️"}
             </Button>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
@@ -74,7 +74,7 @@ function ManageReview({ id, fetchReviews, singleReview }) {
                     </Modal.Footer>
                 </Form>
             </Modal>
-        </Col>
+        </>
     )
 }
 

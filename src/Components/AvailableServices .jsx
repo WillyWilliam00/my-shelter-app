@@ -20,7 +20,7 @@ function AvailableServices({ services }) {// Definisce un array di oggetti per o
 
         serviceItems.map(({ key, icon, label }) => (
 
-            <Badge key={key} bg={services[key] ? "success" : "secondary"} className={`m-2 ${services[key] ? '' : 'text-muted'}`}
+            <Badge key={key} bg={services[key] ? "success" : "secondary"} className={`m-2 ${services[key] ? '' : 'text-muted'} fs-5` }
                 style={{ opacity: services[key] ? '1' : '0.5' }}>
                 {icon} {label}
             </Badge>

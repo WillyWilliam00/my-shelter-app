@@ -6,6 +6,7 @@ import PhoneInput from "react-phone-number-input";
 import GoogleMap from "../GoogleMap/GoogleMap";
 import { Loader } from "@googlemaps/js-api-loader";
 
+
 function ShelterRegistration() {
 
     const navigate = useNavigate("")
@@ -137,33 +138,59 @@ function ShelterRegistration() {
 
     return (
         isApiLoaded && <Container fluid>
-            <Row style={{ height: "100vh" }}>
+            <Row>
                 <Col xs={12} md={6} className="background-ShelterRegistration"></Col>
-                <Col xs={12} md={6} >
-                    <h3>Hai un rifugio e vuoi farlo scoprire a tutti?</h3>
-                    <p>Compilati i campi e registrati a MyShelter!</p>
-                    <Form onSubmit={handleSubmit}>
-                        <Form.Group controlId="shelterNameInput">
-                            <h3>Dati del Rifugio:</h3>
-                            <Form.Label>Nome del tuo rifugio</Form.Label>
-                            <Form.Control
-                                type="name"
-                                placeholder="Inserisci il nome del tuo rifugio"
-                                name="shelterName"
-                                required
-                                value={shelterData.shelterName}
-                                onChange={handleShelterChange}
-                            />
-                        </Form.Group>
-                        <Form.Group className="mb-3" controlId="description">
-                            <Form.Label>Descrivi il tuo rifugio </Form.Label>
-                            <Form.Control as="textarea" rows={3} value={shelterData.description} onChange={handleShelterChange} required name="description" />
-                        </Form.Group>
-                        <Form.Group controlId="formFile" className="mb-3" onChange={handleFile}>
-                            <Form.Label>Carica qui la foto del tuo rifugio:</Form.Label>
-                            <Form.Control type="file" required />
-                        </Form.Group>
-                        <h5>Seleziona i servizi disponibili presso il tuo rifugio:</h5>
+                <Col xs={12} md={6} className="loginBox m-0">
+                    <h2 className="fw-bold mx-auto fitContent Loginh2">Hai un rifugio e vuoi farlo scoprire a tutti?</h2>
+                    <p className="mx-auto fitContent mt-1">Compilati i campi e registrati a <strong>MyShelter!</strong></p>
+                    <Form onSubmit={handleSubmit} className="Form">
+                        <h5 className="fw-bold">Dati del Rifugio:</h5>
+                        <Row>
+                            <Col xs={8}><Form.Group controlId="shelterNameInput">
+                                <Form.Label>Nome del tuo rifugio</Form.Label>
+                                <Form.Control
+                                    type="name"
+                                    placeholder="Inserisci il nome del tuo rifugio"
+                                    name="shelterName"
+                                    required
+                                    value={shelterData.shelterName}
+                                    onChange={handleShelterChange}
+                                />
+                            </Form.Group>
+                            </Col>
+                            <Col xs={4}>
+                                <Form.Group controlId="altitudeInput">
+                                    <Form.Label>Altitudine del rifugio:</Form.Label>
+                                    <Form.Control
+                                        type="number"
+                                        name="altitude"
+                                        placeholder="Inserisci l'altitudine in metri"
+                                        required
+                                        value={shelterData.altitude}
+                                        onChange={handleShelterChange}
+                                    />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row className="my-3">
+                            <Col xs={12} xl={6} className="d-flex flex-column ">
+                                <Form.Group controlId="formFile" className="mb-3" onChange={handleFile}>
+                                    <Form.Label>Carica qui la foto del tuo rifugio:</Form.Label>
+                                    <Form.Control type="file" required />
+                                </Form.Group>
+                                <Form.Group className="mb-3" controlId="description">
+                                    <Form.Label>Descrivi il tuo rifugio </Form.Label>
+                                    <Form.Control as="textarea" rows={12} value={shelterData.description} onChange={handleShelterChange} required name="description" />
+                                </Form.Group>
+
+                            </Col>
+                            <Col xs={12} xl={6}>{/* Mappa per selezionare la posizione del rifugio */}
+                            <h5 className="fw-bold mt-2">Cercati sulla mappa!</h5>
+                                <GoogleMap setShelterData={setShelterData} shelterData={shelterData} markerPosition={markerPosition} setMarkerPosition={setMarkerPosition}></GoogleMap>
+                            </Col>
+                        </Row>
+
+                        <h5 className="fw-bold">Seleziona i servizi disponibili presso il tuo rifugio:</h5>
                         <Row>
                             {Object.keys(availableServicesInfo).map((service) => (
                                 <ServiceCheckbox
@@ -177,18 +204,8 @@ function ShelterRegistration() {
                                 />
                             ))}
                         </Row>
-                        <Form.Group controlId="altitudeInput">
-                            <Form.Label>Altitudine del rifugio:</Form.Label>
-                            <Form.Control
-                                type="number"
-                                name="altitude"
-                                placeholder="Inserisci l'altitudine in metri"
-                                required
-                                value={shelterData.altitude}
-                                onChange={handleShelterChange}
-                            />
-                        </Form.Group>
-                        <h3>Dati del proprietario:</h3>
+
+                        <h5 className="fw-bold">Dati del proprietario:</h5>
                         <Row>
                             <Col>
                                 <Form.Group controlId="nameInput">
@@ -216,6 +233,17 @@ function ShelterRegistration() {
                                     />
                                 </Form.Group>
                             </Col>
+                            <Col><Form.Group controlId="phoneInput">
+                                <Form.Label>Numero di Telefono</Form.Label>
+                                <PhoneInput
+                                    placeholder="Cellulare"
+                                    value={ownerData.phone}
+                                    onChange={(phone) => setOwnerData({ ...ownerData, phone })}
+                                    defaultCountry="IT"
+                                    name="phone"
+
+                                />
+                            </Form.Group></Col>
                         </Row>
                         <Row>
                             <Col> <Form.Group controlId="emailInput">
@@ -229,46 +257,37 @@ function ShelterRegistration() {
                                     required
                                 />
                             </Form.Group></Col>
-                            <Col><Form.Group controlId="phoneInput">
-                                <Form.Label>Numero di Telefono</Form.Label>
-                                <PhoneInput
-                                    placeholder="Inserisci il numero di telefono"
-                                    value={ownerData.phone}
-                                    onChange={(phone) => setOwnerData({ ...ownerData, phone })}
-                                    defaultCountry="IT"
-                                    name="phone"
-                                />
-                            </Form.Group></Col>
+                            {!passwordValid && (
+                            <Alert variant="danger">
+                                La password deve essere lunga almeno 8 caratteri e contenere una lettera maiuscola e un carattere speciale.
+                            </Alert>
+                        )}
+                            <Col xs={6}>
+                                <Form.Group controlId="passwordInput">
+                                    <Form.Label>Password</Form.Label>
+                                    <Form.Control
+                                        type="password"
+                                        placeholder="Inserisci la tua password"
+                                        name="password"
+                                        required
+                                        value={ownerData.password}
+                                        onChange={handleOwnerChange}
+                                    />
+                                </Form.Group></Col>
                         </Row>
-                        <Row><Col xs={6}>
-                            <Form.Group controlId="passwordInput">
-                                <Form.Label>Password</Form.Label>
-                                <Form.Control
-                                    type="password"
-                                    placeholder="Inserisci la tua password"
-                                    name="password"
-                                    required
-                                    value={ownerData.password}
-                                    onChange={handleOwnerChange}
-                                />
-                                {!passwordValid && (
-                                    <Alert variant="danger">
-                                        La password deve essere lunga almeno 8 caratteri e contenere una lettera maiuscola e un carattere speciale.
-                                    </Alert>
-                                )}
-                            </Form.Group></Col></Row>
                         <Container>
                             <Row>
-                                <Col>{/* Mappa per selezionare la posizione del rifugio */}
-                                    <GoogleMap setShelterData={setShelterData} shelterData={shelterData} markerPosition={markerPosition} setMarkerPosition={setMarkerPosition}></GoogleMap>
+                                <Col xs={12} md={6} className="d-flex align-items-baseline justify-content-around mx-auto">
+                                    <Button variant="primary" type="submit" className='mt-3 fs-4' disabled={!passwordValid || !markerPosition}>
+                                        Registrati
+                                    </Button>
+                                    <Link to={"/signin-and-registration"} className=" fs-4 fw-bold mt-3">Sei già Iscritto?</Link>
                                 </Col>
                             </Row>
                         </Container>
-                        <Button variant="primary" type="submit" className='mt-5' disabled={!passwordValid || !markerPosition}>
-                            Registrati
-                        </Button>
+
                     </Form>
-                    <Link to={"/signin-and-registration"}>Accedi!</Link>
+
                 </Col>
             </Row>
         </Container>

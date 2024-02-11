@@ -3,7 +3,6 @@ import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext.js';
 import MapAutocomplete from './MapAutocomplete.jsx';
-import { FaLocationDot } from "react-icons/fa6";
 
 function GoogleMap({ setShelterData, markerPosition, setMarkerPosition, shelters }) {
   const { userData, userType } = useContext(AuthContext) // Accede ai dati dell'utente e al suo tipo dal contesto

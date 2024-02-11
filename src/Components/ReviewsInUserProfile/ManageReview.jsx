@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Button, Col, Form, Modal } from "react-bootstrap";
+import { Button, Form, Modal } from "react-bootstrap";
 import ReactStars from "react-rating-stars-component";
 import AuthContext from "../../context/AuthContext";
 

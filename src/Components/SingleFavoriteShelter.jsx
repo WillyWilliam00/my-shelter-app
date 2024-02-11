@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Button, Card, Col } from "react-bootstrap"
+import { Card, Col } from "react-bootstrap"
 import { fromLatLng, setKey } from "react-geocode";
 import { Link } from "react-router-dom";
 import haversineDistance from "haversine-distance";

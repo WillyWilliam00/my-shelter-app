@@ -10,7 +10,7 @@ import { Loader } from "@googlemaps/js-api-loader";
 
 function EditShelter() {
     const { userData, tokenByLocalStorage, fetchData, userType } = useContext(AuthContext)
-    const [isModified, setIsModified] = useState(false)
+    const [setIsModified] = useState(false)
     const [isApiLoaded, setIsApiLoaded] = useState(false);
     const [imageFile, setImageFile] = useState(new FormData());
     const [isFileSelected, setIsFileSelected] = useState(false);

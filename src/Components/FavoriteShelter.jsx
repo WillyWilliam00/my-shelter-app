@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import FavoritesContext from "../context/favouriteContext"
-import { Button, Container, Row } from "react-bootstrap"
+import { Container, Row } from "react-bootstrap"
 import SingleFavoriteShelter from "./SingleFavoriteShelter"
 import AuthContext from "../context/AuthContext";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
